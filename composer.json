@@ -1,6 +1,6 @@
 {
-    "name": "codeigniter4/shield",
-    "description": "Authentication and Authorization for CodeIgniter 4",
+    "name": "ruhafzazahedi/shield",
+    "description": "Auth for CodeIgniter 4",
     "license": "MIT",
     "type": "library",
     "keywords": [
@@ -11,19 +11,11 @@
     ],
     "authors": [
         {
-            "name": "Lonnie Ezell",
-            "email": "lonnieje@gmail.com",
+            "name": "Ruhafzazahedi",
+            "email": "ruhafzazahedi@gmail.com",
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/codeigniter4/shield",
-    "support": {
-        "issues": "https://github.com/codeigniter4/shield/issues",
-        "forum": "https://github.com/codeigniter4/shield/discussions",
-        "source": "https://github.com/codeigniter4/shield",
-        "docs": "https://codeigniter4.github.io/shield/",
-        "slack": "https://codeigniterchat.slack.com"
-    },
     "require": {
         "php": "^7.4.3 || ^8.0",
         "codeigniter4/settings": "^2.1"
@@ -47,8 +39,6 @@
         "ext-curl": "Required to use the password validation rule via PwnedValidator class.",
         "ext-openssl": "Required to use the JWT Authenticator."
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "CodeIgniter\\Shield\\": "src"
