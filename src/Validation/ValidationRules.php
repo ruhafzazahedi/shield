@@ -36,7 +36,7 @@ class ValidationRules
 
     public function getRegistrationRules(): array
     {
-        $setting = setting('Validation.registration');
+        $setting = setting('Validation.registration') ?? null;
         if ($setting !== null) {
             return $setting;
         }
