@@ -33,7 +33,7 @@ class HmacAuth implements FilterInterface
         $authenticator = auth('hmac')->getAuthenticator();
 
         $requestParams = [
-            'token' => $request->getHeaderLine(setting('Auth.authenticatorHeader')['hmac'] ?? 'Authorization'),
+            'token' => $request->getHeaderLine(config('Auth')->authenticatorHeader['hmac'] ?? 'Authorization'),
             'body'  => $request->getBody() ?? '',
         ];
 
@@ -45,7 +45,7 @@ class HmacAuth implements FilterInterface
                 ->setJSON(['message' => lang('Auth.badToken')]);
         }
 
-        if (setting('Auth.recordActiveDate')) {
+        if (config('Auth')->recordActiveDate) {
             $authenticator->recordActiveDate();
         }
 

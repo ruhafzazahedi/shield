@@ -48,7 +48,7 @@ class ChainAuth implements FilterInterface
             return;
         }
 
-        helper('settings');
+        // helper('settings');
 
         $chain = config('Auth')->authenticationChain;
 

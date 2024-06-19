@@ -448,7 +448,7 @@ class Auth extends BaseConfig
     public function loginRedirect(): string
     {
         $session = session();
-        $url     = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
+        $url     = $session->getTempdata('beforeLoginUrl') ?? config('Auth')->redirects['login'];
 
         return $this->getUrl($url);
     }
@@ -459,7 +459,7 @@ class Auth extends BaseConfig
      */
     public function logoutRedirect(): string
     {
-        $url = setting('Auth.redirects')['logout'];
+        $url = config('Auth')->redirects['logout'];
 
         return $this->getUrl($url);
     }
@@ -470,7 +470,7 @@ class Auth extends BaseConfig
      */
     public function registerRedirect(): string
     {
-        $url = setting('Auth.redirects')['register'];
+        $url = config('Auth')->redirects['register'];
 
         return $this->getUrl($url);
     }
@@ -481,7 +481,7 @@ class Auth extends BaseConfig
      */
     public function forcePasswordResetRedirect(): string
     {
-        $url = setting('Auth.redirects')['force_reset'];
+        $url = config('Auth')->redirects['force_reset'];
 
         return $this->getUrl($url);
     }
@@ -492,7 +492,7 @@ class Auth extends BaseConfig
      */
     public function permissionDeniedRedirect(): string
     {
-        $url = setting('Auth.redirects')['permission_denied'];
+        $url = config('Auth')->redirects['permission_denied'];
 
         return $this->getUrl($url);
     }
@@ -503,7 +503,7 @@ class Auth extends BaseConfig
      */
     public function groupDeniedRedirect(): string
     {
-        $url = setting('Auth.redirects')['group_denied'];
+        $url = config('Auth')->redirects['group_denied'];
 
         return $this->getUrl($url);
     }

@@ -36,7 +36,7 @@ class ValidationRules
 
     public function getRegistrationRules(): array
     {
-        $setting = setting('Validation.registration') ?? null;
+        $setting = config('Validation')->registration ?? null;
         if ($setting !== null) {
             return $setting;
         }
@@ -66,7 +66,7 @@ class ValidationRules
 
     public function getLoginRules(): array
     {
-        return setting('Validation.login') ?? [
+        return config('Validation')->login ?? [
             // 'username' => $this->config->usernameValidationRules,
             'phone'    => $this->config->phoneValidationRules,
             'password' => $this->getPasswordRules(),

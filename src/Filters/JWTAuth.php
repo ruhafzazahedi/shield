@@ -55,7 +55,7 @@ class JWTAuth implements FilterInterface
                 ->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
         }
 
-        if (setting('Auth.recordActiveDate')) {
+        if (config('Auth')->recordActiveDate) {
             $authenticator->recordActiveDate();
         }
     }

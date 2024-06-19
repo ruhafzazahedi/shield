@@ -44,7 +44,7 @@ class MagicLinkController extends BaseController
     public function __construct()
     {
         /** @var class-string<UserModel> $providerClass */
-        $providerClass = setting('Auth.userProvider');
+        $providerClass = config('Auth')->userProvider;
 
         $this->provider = new $providerClass();
     }
@@ -57,7 +57,7 @@ class MagicLinkController extends BaseController
      */
     public function loginView()
     {
-        if (! setting('Auth.allowMagicLinkLogins')) {
+        if (! config('Auth')->allowMagicLinkLogins) {
             return redirect()->route('login')->with('error', lang('Auth.magicLinkDisabled'));
         }
 
@@ -65,7 +65,7 @@ class MagicLinkController extends BaseController
             return redirect()->to(config('Auth')->loginRedirect());
         }
 
-        return $this->view(setting('Auth.views')['magic-link-login']);
+        return $this->view(config('Auth')->views['magic-link-login']);
     }
 
     /**
@@ -77,7 +77,7 @@ class MagicLinkController extends BaseController
      */
     public function loginAction()
     {
-        if (! setting('Auth.allowMagicLinkLogins')) {
+        if (! config('Auth')->allowMagicLinkLogins) {
             return redirect()->route('login')->with('error', lang('Auth.magicLinkDisabled'));
         }
 
@@ -109,7 +109,7 @@ class MagicLinkController extends BaseController
             'user_id' => $user->id,
             'type'    => Session::ID_TYPE_MAGIC_LINK,
             'secret'  => $token,
-            'expires' => Time::now()->addSeconds(setting('Auth.magicLinkLifetime')),
+            'expires' => Time::now()->addSeconds(config('Auth')->magicLinkLifetime),
         ]);
 
         /** @var IncomingRequest $request */
@@ -121,14 +121,14 @@ class MagicLinkController extends BaseController
 
         // Send the user an phone with the code
 		$client = \Config\Services::curlrequest([
-			'baseURI' => setting('Auth.smsBaseUrl')
+			'baseURI' => config('Auth')->smsBaseUrl
 		]);
 		
 		$response = $client->post('verify', [
 			'verify' => false,
 			'headers' => [
 				'Accept'    => 'application/json',
-				'X-API-KEY' => setting('Auth.smsSecretToken')
+				'X-API-KEY' => config('Auth')->smsSecretToken
 			],
 			'json' => [
 				'TemplateId' => 100000,
@@ -156,7 +156,7 @@ class MagicLinkController extends BaseController
      */
     protected function displayMessage(): string
     {
-        return $this->view(setting('Auth.views')['magic-link-message']);
+        return $this->view(config('Auth')->views['magic-link-message']);
     }
 
     /**
@@ -164,7 +164,7 @@ class MagicLinkController extends BaseController
      */
     public function verify(): RedirectResponse
     {
-        if (! setting('Auth.allowMagicLinkLogins')) {
+        if (! config('Auth')->allowMagicLinkLogins) {
             return redirect()->route('login')->with('error', lang('Auth.magicLinkDisabled'));
         }
 

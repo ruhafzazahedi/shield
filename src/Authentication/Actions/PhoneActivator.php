@@ -65,14 +65,14 @@ class PhoneActivator implements ActionInterface
 
         // Send the user an phone with the code
 		$client = \Config\Services::curlrequest([
-			'baseURI' => setting('Auth.smsBaseUrl')
+			'baseURI' => config('Auth')->smsBaseUrl
 		]);
 		
 		$response = $client->post('verify', [
 			'verify' => false,
 			'headers' => [
 				'Accept'    => 'application/json',
-				'X-API-KEY' => setting('Auth.smsSecretToken')
+				'X-API-KEY' => config('Auth')->smsSecretToken
 			],
 			'json' => [
 				'TemplateId' => 100000,
@@ -92,7 +92,7 @@ class PhoneActivator implements ActionInterface
             return redirect()->route('magic-link')->with('error', lang('Auth.unableSendPhoneToUser', [$user->phone]));
         }
 
-        return $this->view(setting('Auth.views')['action_phone_activate_show'], ['user' => $user]);
+        return $this->view(config('Auth')->views['action_phone_activate_show'], ['user' => $user]);
     }
 
     /**
@@ -129,7 +129,7 @@ class PhoneActivator implements ActionInterface
         if (! $authenticator->checkAction($identity, $postedToken)) {
             session()->setFlashdata('error', lang('Auth.invalidActivateToken'));
 
-            return $this->view(setting('Auth.views')['action_phone_activate_show']);
+            return $this->view(config('Auth')->views['action_phone_activate_show']);
         }
 
         $user = $authenticator->getUser();

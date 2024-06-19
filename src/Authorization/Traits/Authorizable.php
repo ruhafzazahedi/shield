@@ -268,7 +268,7 @@ trait Authorizable
                 return false;
             }
 
-            $matrix = setting('AuthGroups.matrix');
+            $matrix = config('AuthGroups')->matrix;
 
             foreach ($this->groupCache as $group) {
                 // Check exact match
@@ -403,7 +403,7 @@ trait Authorizable
      */
     private function getConfigGroups(): array
     {
-        return array_keys(setting('AuthGroups.groups'));
+        return array_keys(config('AuthGroups')->groups);
     }
 
     /**
@@ -411,6 +411,6 @@ trait Authorizable
      */
     private function getConfigPermissions(): array
     {
-        return array_keys(setting('AuthGroups.permissions'));
+        return array_keys(config('AuthGroups')->permissions);
     }
 }

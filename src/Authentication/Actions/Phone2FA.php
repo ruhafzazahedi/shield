@@ -50,7 +50,7 @@ class Phone2FA implements ActionInterface
 
         $this->createIdentity($user);
 
-        return $this->view(setting('Auth.views')['action_phone_2fa'], ['user' => $user]);
+        return $this->view(config('Auth')->views['action_phone_2fa'], ['user' => $user]);
     }
 
     /**
@@ -88,14 +88,14 @@ class Phone2FA implements ActionInterface
 
         // Send the user an phone with the code
 		$client = \Config\Services::curlrequest([
-			'baseURI' => setting('Auth.smsBaseUrl')
+			'baseURI' => config('Auth')->smsBaseUrl
 		]);
 		
 		$response = $client->post('verify', [
 			'verify' => false,
 			'headers' => [
 				'Accept'    => 'application/json',
-				'X-API-KEY' => setting('Auth.smsSecretToken')
+				'X-API-KEY' => config('Auth')->smsSecretToken
 			],
 			'json' => [
 				'TemplateId' => 100000,
@@ -115,7 +115,7 @@ class Phone2FA implements ActionInterface
             return redirect()->route('magic-link')->with('error', lang('Auth.unableSendPhoneToUser', [$user->phone]));
         }
 
-        return $this->view(setting('Auth.views')['action_phone_2fa_verify']);
+        return $this->view(config('Auth')->views['action_phone_2fa_verify']);
     }
 
     /**
@@ -141,7 +141,7 @@ class Phone2FA implements ActionInterface
         if (! $authenticator->checkAction($identity, $postedToken)) {
             session()->setFlashdata('error', lang('Auth.invalid2FAToken'));
 
-            return $this->view(setting('Auth.views')['action_phone_2fa_verify']);
+            return $this->view(config('Auth')->views['action_phone_2fa_verify']);
         }
 
         // Get our login redirect url

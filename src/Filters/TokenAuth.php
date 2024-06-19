@@ -52,7 +52,7 @@ class TokenAuth implements FilterInterface
         $authenticator = auth('tokens')->getAuthenticator();
 
         $result = $authenticator->attempt([
-            'token' => $request->getHeaderLine(setting('Auth.authenticatorHeader')['tokens'] ?? 'Authorization'),
+            'token' => $request->getHeaderLine(config('Auth')->authenticatorHeader['tokens'] ?? 'Authorization'),
         ]);
 
         if (! $result->isOK() || (! empty($arguments) && $result->extraInfo()->tokenCant($arguments[0]))) {
@@ -61,7 +61,7 @@ class TokenAuth implements FilterInterface
                 ->setJson(['message' => lang('Auth.badToken')]);
         }
 
-        if (setting('Auth.recordActiveDate')) {
+        if (config('Auth')->recordActiveDate) {
             $authenticator->recordActiveDate();
         }
 

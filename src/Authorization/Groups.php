@@ -27,7 +27,7 @@ class Groups
      */
     public function info(string $group): ?Group
     {
-        $info = setting('AuthGroups.groups')[strtolower($group)] ?? null;
+        $info = config('AuthGroups')->groups[strtolower($group)] ?? null;
 
         if (empty($info)) {
             return null;
@@ -47,7 +47,7 @@ class Groups
             throw new RuntimeException(lang('Auth.missingTitle'));
         }
 
-        $groups = setting('AuthGroups.groups');
+        $groups = config('AuthGroups')->groups;
 
         $alias = $group->alias;
 
@@ -61,6 +61,6 @@ class Groups
         ];
 
         // Save it
-        setting('AuthGroups.groups', $groups);
+        config('AuthGroups')->groups = $groups;
     }
 }
